@@ -21,3 +21,5 @@ bun dev
     App.js                  # Composant principal de l'application
   /package.json             # Dépendances NPM
 
+cle google map 
+AIzaSyCXoLdAg0BR1MmE7cOd6z3euaJqYHaQz5c
