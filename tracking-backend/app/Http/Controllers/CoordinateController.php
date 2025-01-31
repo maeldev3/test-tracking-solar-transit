@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coordinate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @group Gestion des Coordonnées GPS
@@ -33,17 +34,26 @@ class CoordinateController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
-    {
+   {
+    try {
         $data = $request->validate([
             'name' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'timestamp' => 'required|date',
+            // 'timestamp' => 'nullable|date',
         ]);
+
+    
+            $data['timestamp'] = now(); 
+      
 
         Coordinate::create($data);
         return response()->json(['message' => 'Coordonnée enregistrée'], 201);
+    } catch (\Exception $e) {
+        Log::error("Erreur d'enregistrement de la coordonnée : " . $e->getMessage());
+        return response()->json(['message' => 'Erreur serveur'], 500);
     }
+      }
 
     /**
      * Récupère la liste des coordonnées GPS enregistrées.

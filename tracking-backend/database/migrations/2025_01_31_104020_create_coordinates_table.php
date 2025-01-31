@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
-            $table->timestamp('timestamp');
+            $table->timestamp('timestamp')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }
