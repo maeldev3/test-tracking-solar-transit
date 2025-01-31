@@ -21,9 +21,3 @@ bun dev
     App.js                  # Composant principal de l'application
   /package.json             # Dépendances NPM
 
-/backend                    # Contient le projet Laravel
-  /app                      # Code backend (contrôleurs, modèles)
-  /database                 # Migrations et seeders
-  /routes                   # Routes API (ex: api.php)
-  composer.json             # Dépendances Laravel
-  .env                      # Variables d'environnement (base de données, etc.)
