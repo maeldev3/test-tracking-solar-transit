@@ -26,7 +26,7 @@ Un serveur Laravel avec une route API disponible à http://localhost:8000/api/co
 
 Cloner le dépôt :
 
-git clone https://github.com/maeldev3/test-tracking-solar-transit/tree/master
+git clone https://github.com/maeldev3/test-tracking-solar-transit/tree/master/tracking-node
 cd microservice-coordinates
 
 Installer les dépendances :
@@ -69,4 +69,5 @@ Ce projet est sous licence MIT. Vous êtes libre de l'utiliser et de le modifier
 
 📬 Contact
 
-Si vous avez des questions ou des suggestions, n'hésitez pas à me contacter via votre-email@example.com ou à créer une issue sur GitHub.
+Si vous avez des questions ou des suggestions, n'hésitez pas à me contacter via maeldev3@gmail.comcom ou à créer une issue sur GitHub.
+
