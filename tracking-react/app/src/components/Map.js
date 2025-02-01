@@ -1,38 +1,52 @@
-
-
-
-
 "use client"; // Cette directive marque ce fichier comme un composant côté client
 
 import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript, Marker, Polyline } from "@react-google-maps/api";
 import { fetchCoordinates } from "../services/api";  // Import de l'API
 
+/**
+ * Définition du style du conteneur de la carte
+ */
 const containerStyle = {
   width: "100%",
   height: "600px",
 };
 
-const center = { lat: 48.8566, lng: 2.3522 }; // Coordonnées par défaut (Paris)
+/**
+ * Coordonnées du centre de la carte (Paris par défaut)
+ */
+const center = { lat: 48.8566, lng: 2.3522 };
 
+/**
+ * Composant React affichant une carte Google Maps avec des marqueurs et une polyline.
+ * 
+ * - Récupère les coordonnées des points depuis l'API
+ * - Affiche les marqueurs pour chaque point valide
+ * - Trace une ligne entre les points pour visualiser le trajet
+ * 
+ * @component
+ */
 const MapComponent = () => {
+  // État pour stocker les coordonnées récupérées
   const [coordinates, setCoordinates] = useState([]);
+  
+  // État pour gérer l'affichage du chargement
   const [isLoading, setIsLoading] = useState(true);
 
-  // Effectuer la récupération des coordonnées
+  /**
+   * Effet exécuté au montage du composant pour récupérer une seule fois les coordonnées
+   */
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsLoading(true);
-      fetchCoordinates()
-        .then(data => {
-          setCoordinates(data);
-        })
-        .catch(error => console.error(error))
-        .finally(() => setIsLoading(false));
-    }, 5000); // Mise à jour toutes les 5 secondes
-
-    return () => clearInterval(interval); // Nettoyage de l'intervalle
-  }, []);
+    setIsLoading(true);
+    
+    fetchCoordinates()
+      .then(data => {
+        console.log("Coordonnées reçues :", data); // Log pour le débogage
+        setCoordinates(data);
+      })
+      .catch(error => console.error(error))
+      .finally(() => setIsLoading(false));
+  }, []); // Dépendances vides : exécute une seule fois au montage
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyCXoLdAg0BR1MmE7cOd6z3euaJqYHaQz5c">
@@ -41,12 +55,28 @@ const MapComponent = () => {
           <div>Chargement...</div>
         ) : (
           <>
-            {coordinates.map((point, index) => (
-              <Marker key={index} position={{ lat: point.latitude, lng: point.longitude }} />
+            {/* Affichage des marqueurs uniquement pour les coordonnées valides */}
+            {coordinates
+              .filter(point => 
+                typeof point.latitude === "number" &&
+                typeof point.longitude === "number" &&
+                !isNaN(point.latitude) &&
+                !isNaN(point.longitude)
+              )
+              .map((point, index) => (
+                <Marker key={index} position={{ lat: point.latitude, lng: point.longitude }} />
             ))}
 
+            {/* Tracé de la polyline reliant les points valides */}
             <Polyline
-              path={coordinates.map(point => ({ lat: point.latitude, lng: point.longitude }))}
+              path={coordinates
+                .filter(point => 
+                  typeof point.latitude === "number" &&
+                  typeof point.longitude === "number" &&
+                  !isNaN(point.latitude) &&
+                  !isNaN(point.longitude)
+                )
+                .map(point => ({ lat: point.latitude, lng: point.longitude }))}
               options={{ strokeColor: "red", strokeWeight: 2 }}
             />
           </>
@@ -57,9 +87,3 @@ const MapComponent = () => {
 };
 
 export default MapComponent;
-
-
-
-
-
-
