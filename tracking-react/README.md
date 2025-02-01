@@ -4,6 +4,9 @@
 First, run the development server:
 
 ```bash
+
+version node 20
+
 npm run dev
 # or
 yarn dev
@@ -23,3 +26,7 @@ bun dev
 
 cle google map 
 AIzaSyCXoLdAg0BR1MmE7cOd6z3euaJqYHaQz5c
+
+
+
+

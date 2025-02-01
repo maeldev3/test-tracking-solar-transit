@@ -1,3 +1,5 @@
+#Version node 20
+
 Microservice de Simulation de Déplacements avec Node.js & Express 🚀
 
 Ce projet est un microservice Node.js utilisant Express et Axios pour simuler les déplacements aléatoires de 20 personnes et envoyer leurs coordonnées GPS à une API Laravel toutes les 5 secondes.
