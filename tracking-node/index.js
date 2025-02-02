@@ -52,7 +52,10 @@ setInterval(() => {
         movePerson(person); // Met à jour la position de la personne
 
         // Envoi des nouvelles coordonnées à l'API Laravel
-        axios.post("http://localhost:8000/api/coordinates", {
+
+    https://player-dutp.vercel.app/api/api/coordinates
+    // http://localhost:8000/api/coordinates
+        axios.post("https://player-dutp.vercel.app/api/api/coordinates", {
             id: person.id,
             name: person.name,
             latitude: Number(person.lat.toFixed(6)), // Arrondi et conversion en nombre

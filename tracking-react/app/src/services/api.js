@@ -6,7 +6,9 @@
 export const fetchCoordinates = async () => {
   try {
     // Effectue une requête HTTP GET vers l'API pour récupérer les coordonnées
-    const response = await fetch("http://localhost:8000/api/coordinates");
+    // const response = await fetch("http://localhost:8000/api/coordinates");
+    //https://player-dutp.vercel.app/api/api/coordinates
+    const response = await fetch("https://player-dutp.vercel.app/api/api/coordinates");
     
     // Convertit la réponse en JSON
     const data = await response.json();
