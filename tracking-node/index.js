@@ -16,6 +16,27 @@ let people = Array.from({ length: 20 }, (_, i) => ({
     direction: Math.random() * 360   // Direction de déplacement initiale en degrés
 }));
 
+
+// Initialisation de 20 personnes avec des coordonnées de départ et un rôle aléatoire
+// Simulation de 20 utilisateurs avec un ID existant dans Laravel
+// let users = Array.from({ length: 20 }, (_, i) => ({
+//     id: i + 1,
+//     name: `User ${i + 1}`,
+//     role: i < 5 ? "admin" : "user"  // 5 admins, 15 utilisateurs
+// }));
+
+// // Génération des positions GPS pour chaque utilisateur
+// let people = users.map(user => ({
+//     id: user.id,                      // ID de l'utilisateur (correspondant à Laravel)
+//     name: user.name,                  // Nom de l'utilisateur
+//     lat: 48.8566,                     // Latitude initiale (Paris)
+//     lng: 2.3522,                      // Longitude initiale (Paris)
+//     direction: Math.random() * 360,   // Direction initiale aléatoire
+//     role: user.role                   // Rôle de l'utilisateur
+// }));
+
+
+
 /**
  * Génère une nouvelle position pour une personne en simulant un déplacement de 50 mètres.
  * @param {Object} person - Objet représentant une personne avec ses coordonnées et direction.
@@ -55,7 +76,7 @@ setInterval(() => {
 
     https://player-dutp.vercel.app/api/api/coordinates
     // http://localhost:8000/api/coordinates
-        axios.post("https://player-dutp.vercel.app/api/api/coordinates", {
+        axios.post("http://localhost:8000/api/coordinates", {
             id: person.id,
             name: person.name,
             latitude: Number(person.lat.toFixed(6)), // Arrondi et conversion en nombre

@@ -40,8 +40,18 @@ class CoordinateController extends Controller
             'name' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            // 'timestamp' => 'nullable|date',
+            'longitude' => 'required|numeric',
+            'role' => 'nullable',
+           
         ]);
+
+        // $data = $request->validate([
+        //     'user_id'   => 'required|exists:users,id', // Vérifie si l'utilisateur existe
+        //     'name'      => 'required|string',
+        //     'role'      => 'required|string|in:admin,user', // Vérifie que le rôle est valide
+        //     'latitude'  => 'required|numeric',
+        //     'longitude' => 'required|numeric',
+        // ]);
 
     
             $data['timestamp'] = now(); 
@@ -72,8 +82,25 @@ class CoordinateController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+     public function index()
+     {
+         return response()->json(Coordinate::latest()->get());
+     }
+
+     /*
+     public function index()
     {
-        return response()->json(Coordinate::latest()->get());
-    }
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            // L'administrateur voit les mouvements de toutes les personnes
+            $coordinates = Coordinate::latest()->get();
+        } else {
+            // L'utilisateur standard voit uniquement ses propres mouvements
+            $coordinates = Coordinate::where('name', $user->name)->latest()->get();
+        }
+
+        return response()->json($coordinates);
+    } */
+
 }

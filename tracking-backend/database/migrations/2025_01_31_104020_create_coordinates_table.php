@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('coordinates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->timestamp('timestamp')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->string('role')->nullable(); // Ajout du champ rôle
             $table->timestamps();
         });
     }
