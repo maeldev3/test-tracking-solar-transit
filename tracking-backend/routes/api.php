@@ -23,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/coordinates', [CoordinateController::class, 'store']);
 Route::get('/coordinates', [CoordinateController::class, 'index']);
+Route::post('/check-user', [AuthController::class, 'checkUserExists']);
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);

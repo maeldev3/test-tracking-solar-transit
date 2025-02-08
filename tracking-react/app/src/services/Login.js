@@ -1,15 +1,25 @@
 "use client";
 import React, { useState, useContext } from "react";
-import { AuthContext } from "./AuthContext"; // Vérifie que le chemin est correct
+import { AuthContext } from "./AuthContext";
 
-// Composant pour le bouton avec états
+// Composant bouton amélioré avec effet au survol
 const Button = ({ loading, children, disabled }) => (
-    <button type="submit" disabled={disabled} style={{ padding: '10px 20px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '4px', cursor: disabled ? 'not-allowed' : 'pointer' }}>
-        {loading ? (
-            <span>Loading...</span> // Remplacer par un spinner si nécessaire
-        ) : (
-            children
-        )}
+    <button 
+        type="submit" 
+        disabled={disabled} 
+        style={{ 
+            width: '100%',
+            padding: '12px',
+            backgroundColor: disabled ? '#ccc' : '#007BFF',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '16px',
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            transition: '0.3s'
+        }}
+    >
+        {loading ? "Connexion en cours..." : children}
     </button>
 );
 
@@ -17,30 +27,41 @@ const Login = () => {
     const { login } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(""); // Pour afficher les erreurs
-    const [loading, setLoading] = useState(false); // Pour afficher un indicateur de chargement
+    const [error, setError] = useState(""); 
+    const [loading, setLoading] = useState(false); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Active le chargement
-        setError(""); // Réinitialise l'erreur
+        setLoading(true);
+        setError("");
 
         try {
-            await login(email, password); // Attends la connexion
+            await login(email, password);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
-            setError("Les identifiants sont incorrects. Veuillez réessayer.");
+            setError("⚠️ Identifiants incorrects. Veuillez réessayer.");
         } finally {
-            setLoading(false); // Désactive le chargement
+            setLoading(false);
         }
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: 'auto', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff' }}>
-            <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Connexion</h2>
-            <form onSubmit={handleSubmit}>
+        <div style={{ 
+            maxWidth: '400px', 
+            margin: 'auto', 
+            padding: '25px', 
+            borderRadius: '8px', 
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+            backgroundColor: '#fff',
+            textAlign: 'center'
+        }}>
+            <h2 style={{ marginBottom: '20px', fontSize: '22px', fontWeight: 'bold' }}>
+                🔐 Accès sécurisé à votre compte
+            </h2>
+
+            <form onSubmit={handleSubmit} style={{ textAlign: 'left' }}>
                 <div style={{ marginBottom: '15px' }}>
-                    <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>Email</label>
+                    <label htmlFor="email" style={{ display: 'block', fontWeight: 'bold' }}>Email</label>
                     <input
                         id="email"
                         type="email"
@@ -48,11 +69,18 @@ const Login = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+                        style={{ 
+                            width: '100%', 
+                            padding: '10px', 
+                            borderRadius: '4px', 
+                            border: '1px solid #ddd',
+                            fontSize: '14px'
+                        }}
                     />
                 </div>
+
                 <div style={{ marginBottom: '15px' }}>
-                    <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>Mot de passe</label>
+                    <label htmlFor="password" style={{ display: 'block', fontWeight: 'bold' }}>Mot de passe</label>
                     <input
                         id="password"
                         type="password"
@@ -60,15 +88,38 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+                        style={{ 
+                            width: '100%', 
+                            padding: '10px', 
+                            borderRadius: '4px', 
+                            border: '1px solid #ddd',
+                            fontSize: '14px'
+                        }}
                     />
                 </div>
-                
-                {error && <p style={{ color: "red", fontSize: '14px', marginBottom: '10px' }}>{error}</p>} {/* Affichage de l'erreur */}
+
+                {error && (
+                    <p style={{
+                        backgroundColor: '#ffe5e5', 
+                        color: '#d9534f', 
+                        padding: '10px', 
+                        borderRadius: '4px', 
+                        fontSize: '14px',
+                        textAlign: 'center'
+                    }}>
+                        {error}
+                    </p>
+                )}
 
                 <Button loading={loading} disabled={loading}>
                     Se connecter
                 </Button>
+
+                <p style={{ textAlign: 'center', marginTop: '10px' }}>
+                    <a href="/forgot-password" style={{ color: '#007BFF', textDecoration: 'none' }}>
+                        Mot de passe oublié ?
+                    </a>
+                </p>
             </form>
         </div>
     );

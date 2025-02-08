@@ -35,27 +35,7 @@ export function AuthProvider({ children }) {
         }
     }, []);
 
-    // const login = async (email, password) => {
-    //     try {
-    //         const res = await fetch("/api/login", {
-    //             method: "POST",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify({ email, password })
-    //         });
-
-    //         const data = await res.json();
-    //         if (res.ok) {
-    //             localStorage.setItem("token", data.token);
-    //             setUser(data.user);
-    //             router.push("/dashboard");
-    //         } else {
-    //             throw new Error(data.message || "Login failed");
-    //         }
-    //     } catch (error) {
-    //         console.error("Login Error:", error.message);
-    //     }
-    // };
-
+    
     const API_URL = "http://127.0.0.1:8000/api"; // Change selon l'URL de ton backend Laravel
 
 const login = async (email, password) => {
@@ -73,7 +53,8 @@ const login = async (email, password) => {
         const data = await res.json();
         localStorage.setItem("token", data.token);
         setUser(data.user);
-        router.push("/dashboard");
+        //router.push("/dashboard");
+        router.push("/");
     } catch (error) {
         console.error("Login Error:", error.message);
         setError("Impossible de se connecter. Vérifiez vos identifiants.");
@@ -83,7 +64,7 @@ const login = async (email, password) => {
     const logout = () => {
         localStorage.removeItem("token");
         setUser(null);
-        router.push("/login");
+        //router.push("/login");
     };
 
     return (

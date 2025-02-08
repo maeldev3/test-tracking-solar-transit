@@ -10,6 +10,8 @@ const Dashboard = () => {
         <div>
             <h1>Bienvenue, {user ? user.name : "Utilisateur"}</h1>
             <button onClick={logout}>Déconnexion</button>
+
+            <MapComponent />
         </div>
     );
 };

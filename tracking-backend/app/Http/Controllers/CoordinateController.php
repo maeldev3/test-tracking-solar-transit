@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Coordinate;
+use App\Models\{Coordinate,User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 
 /**
  * @group Gestion des Coordonnées GPS
@@ -36,22 +37,24 @@ class CoordinateController extends Controller
     public function store(Request $request)
    {
     try {
+        
         $data = $request->validate([
-            'name' => 'required|string',
-            'latitude' => 'required|numeric',
+            'user_id'   => 'nullable|exists:users,id', // Vérifie si l'utilisateur existe
+            'name'      => 'required|string',
+            'role'      => 'nullable', // Vérifie que le rôle est valide
+            'latitude'  => 'required|numeric',
             'longitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'role' => 'nullable',
-           
         ]);
 
-        // $data = $request->validate([
-        //     'user_id'   => 'required|exists:users,id', // Vérifie si l'utilisateur existe
-        //     'name'      => 'required|string',
-        //     'role'      => 'required|string|in:admin,user', // Vérifie que le rôle est valide
-        //     'latitude'  => 'required|numeric',
-        //     'longitude' => 'required|numeric',
-        // ]);
+         // Vérifier si un user_id est fourni et récupérer son rôle depuis la base
+        if (!empty($data['user_id'])) {
+            $user = User::find($data['user_id']);
+            if (!$user) {
+                return response()->json(['error' => 'Utilisateur non trouvé'], 404);
+            }
+            $data['role'] = $user->role; // Associer automatiquement le rôle
+        }
+
 
     
             $data['timestamp'] = now(); 
@@ -86,21 +89,5 @@ class CoordinateController extends Controller
      {
          return response()->json(Coordinate::latest()->get());
      }
-
-     /*
-     public function index()
-    {
-        $user = Auth::user();
-
-        if ($user->role === 'admin') {
-            // L'administrateur voit les mouvements de toutes les personnes
-            $coordinates = Coordinate::latest()->get();
-        } else {
-            // L'utilisateur standard voit uniquement ses propres mouvements
-            $coordinates = Coordinate::where('name', $user->name)->latest()->get();
-        }
-
-        return response()->json($coordinates);
-    } */
 
 }
