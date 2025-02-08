@@ -6,7 +6,7 @@
 export const fetchCoordinates = async () => {
   try {
     // Définition de l'URL de l'API à partir des variables d'environnement ou d'une valeur par défaut
-    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+    const API_URL = process.env.REACT_APP_API_URL || "https://player-dutp.vercel.app/api";
 
     // Envoi d'une requête GET à l'API pour récupérer les coordonnées
     const response = await fetch(`${API_URL}/api/coordinates`);
