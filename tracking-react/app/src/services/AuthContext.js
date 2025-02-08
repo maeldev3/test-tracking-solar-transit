@@ -77,16 +77,21 @@
 // export { AuthContext, AuthProvider };
 //  // ✅ Export séparé du contexte et du provider
 
-
 "use client";
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const AuthContext = createContext(null);
+const AuthContext = createContext({
+    user: null,
+    login: async () => {},
+    logout: () => {},
+    loading: true,
+});
 
-const API_URL = "https://player-dutp.vercel.app/api/api"; // Change selon l'URL de ton backend Laravel
 
-export function AuthProvider({ children }) {
+const API_URL = "https://player-dutp.vercel.app/api/api";
+
+function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -146,4 +151,6 @@ export function AuthProvider({ children }) {
     );
 }
 
-export { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider }; // ✅ Un seul export
+
+

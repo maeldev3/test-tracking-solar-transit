@@ -2,22 +2,28 @@
 import { AuthProvider } from "../app/src/services/AuthContext";
 import PrivateRoute from "../app/src/services/PrivateRoute";
 import Login from "../app/src/services/Login";
-import Dashboard from "./dashboard";
 import { useContext } from "react";
 import { AuthContext } from "../app/src/services/AuthContext";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import MapComponent from "../app/src/components/Map";
 
 function MainContent() {
+   
+    
+
     const { user, loading, logout } = useContext(AuthContext);
-    const router = useRouter();
+
+
+    // const router = useRouter();
+
+
 
     if (loading) return <p>Chargement...</p>;
 
     return user ? (
         <PrivateRoute>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                <h1>Bienvenue, {user ? user.name : "Utilisateur"}</h1>
+                {/* <h1>Bienvenue, {user ? user.name : "Utilisateur"}</h1> */}
                 <button 
                     onClick={() => {
                         logout();
